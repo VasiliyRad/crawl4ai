@@ -105,6 +105,8 @@ This page provides a comprehensive list of example scripts that demonstrate vari
 Crawl4AI works well with AG2 (formerly AutoGen) for agentic browsing. The example below uses `Crawl4AITool` with a Pydantic schema to return structured data.
 
 ```python
+# Install: `pip install "ag2[openai,crawl4ai]"`
+
 import os
 from autogen import AssistantAgent, UserProxyAgent, LLMConfig
 from autogen.tools.experimental import Crawl4AITool
@@ -116,13 +118,12 @@ class NewsArticle(BaseModel):
     summary: str = Field(description="A brief summary of the content")
 
 
-llm_config = LLMConfig(config_list=[
-    {
+llm_config = LLMConfig({
         "api_type": "openai",
         "model": "gpt-4o",
         "api_key": os.environ["OPENAI_API_KEY"],
     }
-])
+)
 
 researcher = AssistantAgent(
     name="WebResearcher",
@@ -140,11 +141,11 @@ crawl_tool = Crawl4AITool(llm_config=llm_config, extraction_model=NewsArticle)
 crawl_tool.register_for_execution(user_proxy)
 crawl_tool.register_for_llm(researcher)
 
-user_proxy.initiate_chat(
+user_proxy.run(
     recipient=researcher,
     message="Extract the top 3 headlines and summaries from https://techcrunch.com using the news schema.",
     max_turns=2,
-)
+).process()
 ```
 
 ## Content Generation & Markdown
