@@ -102,7 +102,7 @@ This page provides a comprehensive list of example scripts that demonstrate vari
 
 ## Community Integrations
 
-Crawl4AI works well with AG2 (AutoGen 2) for agentic browsing. The example below uses `Crawl4AITool` with a Pydantic schema to return structured data.
+Crawl4AI works well with AG2 (formerly AutoGen) for agentic browsing. The example below uses `Crawl4AITool` with a Pydantic schema to return structured data.
 
 ```python
 import os
